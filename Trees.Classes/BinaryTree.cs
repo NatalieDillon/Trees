@@ -2,20 +2,52 @@
 {
     public class BinaryTree<T> : IBinaryTree<T> where T : IComparable<T>
     {
-        public T Node { get; private set; }
-        public IBinaryTree<T>? Left { get; private set; }
-        public IBinaryTree<T>? Right { get; private set; }
+        // Private fields
+        protected BinaryTree<T>? _right;
+        protected BinaryTree<T>? _left;
 
+        // Protected methods
+        protected virtual void CreateRightNode(T node)
+        {
+            _right = new BinaryTree<T>(node);
+        }
+
+        protected virtual void CreateLeftNode(T node)
+        {
+            _left = new BinaryTree<T>(node);
+        }
+
+        // Public properties
+        public T Node { get; private set; }
+
+        public virtual IBinaryTree<T>? Left
+        {
+            get
+            {
+                return _left;
+            }
+        }
+
+        public virtual IBinaryTree<T>? Right
+        {
+            get
+            {
+                return _right;
+            }
+        }
+
+        // Constructor
         public BinaryTree(T node)
         {
             Node = node;
         }
 
-        public void InOrder(List<T> nodeValues) 
+        // Public methods
+        public void InOrder(List<T> nodeValues)
         {
-            if (Left != null) 
-            { 
-                Left.InOrder(nodeValues); 
+            if (Left != null)
+            {
+                Left.InOrder(nodeValues);
             }
             nodeValues.Add(Node);
             if (Right != null)
@@ -38,7 +70,7 @@
         }
 
         public void PostOrder(List<T> nodeValues)
-        {           
+        {
             if (Left != null)
             {
                 Left.PostOrder(nodeValues);
@@ -71,13 +103,13 @@
             return nodeValues;
         }
 
-        public void Add(T newNode)  
+        public void Add(T newNode)
         {
             if (Node.CompareTo(newNode) > 0)
             {
                 if (Left == null)
                 {
-                    Left = new BinaryTree<T>(newNode);
+                    CreateLeftNode(newNode);
                 }
                 else
                 {
@@ -88,7 +120,7 @@
             {
                 if (Right == null)
                 {
-                    Right = new BinaryTree<T>(newNode);
+                    CreateRightNode(newNode);
                 }
                 else
                 {
