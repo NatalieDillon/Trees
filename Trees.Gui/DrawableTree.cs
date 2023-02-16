@@ -27,29 +27,47 @@ namespace Trees.Gui
         {
         }
 
+        public void Draw(ICanvas canvas, RectF dirtyRect, int level)
+        {
+            int xOffset = 50;
+            canvas.DrawString(Node.ToString(), dirtyRect.Center.X, dirtyRect.Y, 100, 100, HorizontalAlignment.Left, VerticalAlignment.Top);
+            if (Left != null)
+            {                
+                if (level == 1)
+                {
+                    xOffset *= 2;
+                }
+                canvas.DrawLine(dirtyRect.Center.X - 5, dirtyRect.Y + 10, dirtyRect.Center.X - xOffset, dirtyRect.Y + 50);
+                dirtyRect.X -= xOffset;
+                dirtyRect.Y += 50;
+                level += 1;
+                ((DrawableTree<T>)Left).Draw(canvas, dirtyRect, level);
+                dirtyRect.X += xOffset;
+                dirtyRect.Y -= 50;
+                level -= 1;
+            }
+            if (Right != null)
+            {               
+                if (level == 1)
+                {
+                    xOffset *= 2;
+                }
+                canvas.DrawLine(dirtyRect.Center.X + 20, dirtyRect.Y + 15, dirtyRect.Center.X + xOffset, dirtyRect.Y + 45);
+                dirtyRect.X += xOffset;
+                dirtyRect.Y += 50;
+                level += 1;
+                ((DrawableTree<T>)Right).Draw(canvas, dirtyRect, level);
+                dirtyRect.X -= xOffset;
+                dirtyRect.Y -= 50;
+                level -= 1;
+            }
+        }
+
         public void Draw(ICanvas canvas, RectF dirtyRect)
         {
             canvas.StrokeColor = Colors.Red;
             canvas.StrokeSize = 1;
-            canvas.DrawString(Node.ToString(), dirtyRect.Center.X, dirtyRect.Y, 100, 100, HorizontalAlignment.Left, VerticalAlignment.Top);
-            if (Left != null)
-            {                
-                canvas.DrawLine(dirtyRect.Center.X, dirtyRect.Y, dirtyRect.Center.X - 50, dirtyRect.Y + 50);
-                dirtyRect.X -= 50;
-                dirtyRect.Y += 50;
-                ((DrawableTree<T>)Left).Draw(canvas, dirtyRect);
-                dirtyRect.X += 50;
-                dirtyRect.Y -= 50;
-            }
-            if (Right != null)
-            {
-                canvas.DrawLine(dirtyRect.Center.X, dirtyRect.Y, dirtyRect.Center.X + 50, dirtyRect.Y + 50);
-                dirtyRect.X += 50;
-                dirtyRect.Y += 50;
-                ((DrawableTree<T>)Right).Draw(canvas, dirtyRect);
-                dirtyRect.X -= 50;
-                dirtyRect.Y -= 50;
-            }
+            Draw(canvas, dirtyRect, 1);
         }
 
         

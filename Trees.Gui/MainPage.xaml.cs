@@ -13,10 +13,8 @@ namespace Trees.Gui
         {
             InitializeComponent();
             tree = new DrawableTree<string>("mammoth");
-            tree.Add("penguin");
-            tree.Add("cat");           
-            tree.Add("bat");
-            tree.Add("dog");
+            List<string> list = new() { "penguin", "cat", "bat", "dog", "bird", "snake", "panda" };
+            tree.Add(list);
             GraphicsView graphicsView = new GraphicsView();
             graphicsView.Drawable = tree;
             graphicsView.HeightRequest = 600;
