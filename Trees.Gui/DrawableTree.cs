@@ -41,7 +41,7 @@ namespace Trees.Gui
             canvas.StrokeSize = 1;
 
             int offset = CalcOffset();
-            canvas.DrawString(Node.ToString() + Level.ToString(), dirtyRect.Center.X, dirtyRect.Y, 100, 100, HorizontalAlignment.Left, VerticalAlignment.Top);
+            canvas.DrawString(Node.ToString(), dirtyRect.Center.X, dirtyRect.Y, 100, 100, HorizontalAlignment.Left, VerticalAlignment.Top);
             if (Left != null)
             {
                 canvas.DrawLine(dirtyRect.Center.X - 5, dirtyRect.Y + 10, dirtyRect.Center.X - offset, dirtyRect.Y + YIncrement);
