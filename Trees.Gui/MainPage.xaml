@@ -10,12 +10,35 @@
             VerticalOptions="Center"
             x:Name="layout">
 
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
+            <HorizontalStackLayout 
+                HorizontalOptions="Center"
+                Padding="16,8"
+                Spacing="8">
+                <Entry x:Name="entry"
+                       HorizontalOptions="Center"
+                       WidthRequest="100"
+                       Completed="OnAddClicked"/>
+                <Button
+                x:Name="addBtn"
+                Text="Add"
+                SemanticProperties.Hint="Adds to the tree"
+                Clicked="OnAddClicked"
                 HorizontalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <Border
+                Stroke = "Black"
+                Background = "AliceBlue"
+                StrokeThickness = "4"
+                Padding="16,8"
+                HorizontalOptions ="Center">
+                <GraphicsView
+                x:Name= "graphicsView"
+                HeightRequest="600"
+                WidthRequest="800" />
+            </Border>
+
+
 
         </VerticalStackLayout>
     </ScrollView>

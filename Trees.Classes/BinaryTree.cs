@@ -2,38 +2,20 @@
 {
     public class BinaryTree<T> : IBinaryTree<T> where T : IComparable<T>
     {
-        // Private fields
-        protected BinaryTree<T>? _right;
-        protected BinaryTree<T>? _left;
-
+      
         // Protected methods
-        protected virtual void CreateRightNode(T node)
-        {
-            _right = new BinaryTree<T>(node);
-        }
-
-        protected virtual void CreateLeftNode(T node)
-        {
-            _left = new BinaryTree<T>(node);
-        }
-
+      
         // Public properties
         public T Node { get; private set; }
 
         public virtual IBinaryTree<T>? Left
         {
-            get
-            {
-                return _left;
-            }
+            get; protected set;
         }
 
         public virtual IBinaryTree<T>? Right
         {
-            get
-            {
-                return _right;
-            }
+            get; protected set;
         }
 
         // Constructor
@@ -103,13 +85,13 @@
             return nodeValues;
         }
 
-        public void Add(T newNode)
+        public virtual void Add(T newNode)
         {
             if (Node.CompareTo(newNode) > 0)
             {
                 if (Left == null)
                 {
-                    CreateLeftNode(newNode);
+                    Left = new BinaryTree<T>(newNode);
                 }
                 else
                 {
@@ -120,7 +102,7 @@
             {
                 if (Right == null)
                 {
-                    CreateRightNode(newNode);
+                    Right = new BinaryTree<T>(newNode);
                 }
                 else
                 {

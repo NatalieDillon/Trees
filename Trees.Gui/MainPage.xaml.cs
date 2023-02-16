@@ -5,47 +5,21 @@ namespace Trees.Gui
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
-
         DrawableTree<string> tree;
 
         public MainPage()
         {
             InitializeComponent();
             tree = new DrawableTree<string>("mammoth");
-            List<string> list = new() { "penguin", "cat", "bat", "dog", "bird", "snake", "panda" };
+            List<string> list = new() { "penguin", "cat", "bat", "dog", "bird", "snake", "panda", "ant" };
             tree.Add(list);
-            GraphicsView graphicsView = new GraphicsView();
-            graphicsView.Drawable = tree;
-            graphicsView.HeightRequest = 600;
-            graphicsView.WidthRequest = 800;           
-
-
-            Border border = new Border
-            {
-                Stroke = Colors.Black,
-                Background = Colors.Aquamarine,
-                StrokeThickness = 4,
-                Padding = new Thickness(16, 8),
-                HorizontalOptions = LayoutOptions.Center
-            };
-
-            border.Content = graphicsView;
-            layout.Children.Add(border);
-
+            graphicsView.Drawable = tree;  
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
+        private void OnAddClicked(object sender, EventArgs e)
         {
-            
-            count++;
-
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
+            tree.Add(entry.Text);
+            graphicsView.Invalidate();
         }
     }
 }

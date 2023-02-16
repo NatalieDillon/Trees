@@ -11,65 +11,89 @@ using Trees.Classes;
 namespace Trees.Gui
 {
     internal class DrawableTree<T> : BinaryTree<T>, IDrawable where T : IComparable<T>
-    {
-               
-        // Protected methods
-        protected override void CreateRightNode(T node)
+    {               
+        public int Level { get; set; }
+     
+        public DrawableTree(T node, int level) : base(node)
         {
-            _right = new DrawableTree<T>(node);
+            Level = level;
         }
 
-        protected override void CreateLeftNode(T node)
-        {
-            _left = new DrawableTree<T>(node);
-        }
         public DrawableTree(T node) : base(node)
         {
+            Level = 1;
         }
 
-        public void Draw(ICanvas canvas, RectF dirtyRect, int level)
+        private const int OffsetIncrement = 75;
+        private const int MinimumOffset = 50;
+        private const int MaxOffset = 200;
+        private const int YIncrement = 75;
+        
+        private int CalcOffset()
         {
-            int xOffset = 50;
-            canvas.DrawString(Node.ToString(), dirtyRect.Center.X, dirtyRect.Y, 100, 100, HorizontalAlignment.Left, VerticalAlignment.Top);
-            if (Left != null)
-            {                
-                if (level == 1)
-                {
-                    xOffset *= 2;
-                }
-                canvas.DrawLine(dirtyRect.Center.X - 5, dirtyRect.Y + 10, dirtyRect.Center.X - xOffset, dirtyRect.Y + 50);
-                dirtyRect.X -= xOffset;
-                dirtyRect.Y += 50;
-                level += 1;
-                ((DrawableTree<T>)Left).Draw(canvas, dirtyRect, level);
-                dirtyRect.X += xOffset;
-                dirtyRect.Y -= 50;
-                level -= 1;
-            }
-            if (Right != null)
-            {               
-                if (level == 1)
-                {
-                    xOffset *= 2;
-                }
-                canvas.DrawLine(dirtyRect.Center.X + 20, dirtyRect.Y + 15, dirtyRect.Center.X + xOffset, dirtyRect.Y + 45);
-                dirtyRect.X += xOffset;
-                dirtyRect.Y += 50;
-                level += 1;
-                ((DrawableTree<T>)Right).Draw(canvas, dirtyRect, level);
-                dirtyRect.X -= xOffset;
-                dirtyRect.Y -= 50;
-                level -= 1;
-            }
-        }
+            int offset = MaxOffset - ((Level-1) * OffsetIncrement);
+            return offset > MinimumOffset ? offset : MinimumOffset;
+        }      
 
         public void Draw(ICanvas canvas, RectF dirtyRect)
         {
             canvas.StrokeColor = Colors.Red;
             canvas.StrokeSize = 1;
-            Draw(canvas, dirtyRect, 1);
+
+            int offset = CalcOffset();
+            canvas.DrawString(Node.ToString() + Level.ToString(), dirtyRect.Center.X, dirtyRect.Y, 100, 100, HorizontalAlignment.Left, VerticalAlignment.Top);
+            if (Left != null)
+            {
+                canvas.DrawLine(dirtyRect.Center.X - 5, dirtyRect.Y + 10, dirtyRect.Center.X - offset, dirtyRect.Y + YIncrement);
+                dirtyRect.X -= offset;
+                dirtyRect.Y += YIncrement;
+                ((DrawableTree<T>)Left).Draw(canvas, dirtyRect);
+                dirtyRect.X += offset;
+                dirtyRect.Y -= YIncrement;
+            }
+            if (Right != null)
+            {
+                canvas.DrawLine(dirtyRect.Center.X + 5, dirtyRect.Y + 15, dirtyRect.Center.X + offset, dirtyRect.Y + YIncrement);
+                dirtyRect.X += offset;
+                dirtyRect.Y += YIncrement;
+                ((DrawableTree<T>)Right).Draw(canvas, dirtyRect);
+                dirtyRect.X -= offset;
+                dirtyRect.Y -= YIncrement;
+            }
         }
 
-        
+        public override void Add(T newNode)
+        {
+            DrawableTree<T> current = this;
+            while (current != null)
+            {
+                if (current.Node.CompareTo(newNode) > 0)
+                {
+                    if (current.Left == null)
+                    {
+                        current.Left = new DrawableTree<T>(newNode, current.Level+1);
+                        return;
+                    }
+                    else
+                    {
+                        current = (DrawableTree<T>)current.Left;
+                    }
+                }
+                else
+                {
+                    if (current.Right == null)
+                    {
+                        current.Right = new DrawableTree<T>(newNode, current.Level+1);
+                        return;
+                    }
+                    else
+                    {
+                        current = (DrawableTree<T>)current.Right;
+                    }
+                }
+            }
+        }
+
+
     }
 }
