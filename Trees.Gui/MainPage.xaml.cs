@@ -28,26 +28,40 @@ namespace Trees.Gui
             graphicsView.Invalidate();
         }
 
-        private void OnRemoveClicked(object sender, EventArgs e)
+        private async void OnRemoveClicked(object sender, EventArgs e)
         {
-            if (tree != null)
+            try
             {
-                tree.Remove(remove.Text);
-                graphicsView.Invalidate();
+                if (tree != null)
+                {
+                    tree.Remove(remove.Text);
+                    graphicsView.Invalidate();
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"Could not remove node {ex.Message}", "OK");
             }
         }
 
-        private void OnInOrderClicked(object sender, EventArgs e)
+        private async void OnInOrderClicked(object sender, EventArgs e)
         {
-            traversedItems.Clear();
-            if (tree != null)
+            try
             {
-                tree.InOrder(traversedItems);
-                displayNodes.Text = string.Empty;
-                foreach (string node in traversedItems)
+                traversedItems.Clear();
+                if (tree != null)
                 {
-                    displayNodes.Text += node + "\n";
+                    tree.InOrder(traversedItems);
+                    displayNodes.Text = string.Empty;
+                    foreach (string node in traversedItems)
+                    {
+                        displayNodes.Text += node + "\n";
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"Could not display nodes in order. {ex.Message}", "OK");
             }
         }
 
