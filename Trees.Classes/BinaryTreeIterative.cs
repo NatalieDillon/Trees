@@ -1,10 +1,10 @@
 ﻿namespace Trees.Classes
 {
-    public class BinaryTreeIterative<T> : IBinaryTree<T> where T : IComparable<T>
+    public class BinaryTreeIterative<T>  where T : IComparable<T>
     {
         public T Node { get; private set; }
-        public IBinaryTree<T>? Left { get; private set; }
-        public IBinaryTree<T>? Right { get; private set; }
+        public BinaryTreeIterative<T>? Left { get; private set; }
+        public BinaryTreeIterative<T>? Right { get; private set; }
 
         public BinaryTreeIterative(T node)
         {
@@ -13,8 +13,8 @@
 
         public void InOrder(List<T> nodeValues) 
         {
-            Stack<IBinaryTree<T>> stack = new();
-            IBinaryTree<T>? current = this;
+            Stack<BinaryTreeIterative<T>> stack = new();
+            BinaryTreeIterative<T>? current = this;
             while (current != null || stack.Count > 0)
             {
                 while (current != null)
@@ -23,7 +23,7 @@
                     current = current.Left;
                 }
 
-                IBinaryTree<T> output = stack.Pop();
+                BinaryTreeIterative<T> output = stack.Pop();
                 nodeValues.Add(output.Node);
                 current = output.Right;
             }
@@ -51,7 +51,7 @@
                     }
                     else
                     {
-                        current = (BinaryTreeIterative<T>)current.Left;
+                        current = current.Left;
                     }
                 }
                 else
@@ -63,40 +63,11 @@
                     }
                     else
                     {
-                        current = (BinaryTreeIterative<T>)current.Right;
+                        current = current.Right;
                     }
                 }
             }
         }
 
-        public void PreOrder(List<T> nodeValues)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void PostOrder(List<T> nodeValues)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<T> BreadthFirst()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Contains(T node)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Remove(T node)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IBinaryTree<T>? RemoveNode(T node)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

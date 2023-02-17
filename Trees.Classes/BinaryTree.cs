@@ -1,19 +1,17 @@
 ﻿namespace Trees.Classes
 {
-    public class BinaryTree<T> : IBinaryTree<T> where T : IComparable<T>, IEquatable<T>
-    {
-      
-        // Protected methods
+    public class BinaryTree<T> where T : IComparable<T>, IEquatable<T>
+    {     
       
         // Public properties
         public T Node { get; private set; }
 
-        public virtual IBinaryTree<T>? Left
+        public BinaryTree<T>? Left
         {
             get; protected set;
         }
 
-        public virtual IBinaryTree<T>? Right
+        public BinaryTree<T>? Right
         {
             get; protected set;
         }
@@ -67,8 +65,8 @@
         public List<T> BreadthFirst()
         {
             List<T> nodeValues = new();
-            Queue<IBinaryTree<T>> queue = new();
-            IBinaryTree<T>? current = this;
+            Queue<BinaryTree<T>> queue = new();
+            BinaryTree<T>? current = this;
             while (current != null)
             {
                 nodeValues.Add(current.Node);
@@ -142,12 +140,12 @@
         {
            if (Node.Equals(node))
            {
-                return; // We can't remove the root node in this case
+                return; // We can't remove the root node 
            }
            RemoveNode(node);
         }
 
-        public IBinaryTree<T>? RemoveNode(T node)
+       private BinaryTree<T>? RemoveNode(T node)
         {
             if (Node.CompareTo(node) > 0 && Left!= null)
             {
@@ -161,16 +159,16 @@
             }
             else if (Node.Equals(node))
             {
-                if (Left == null) {
-                    return Right;
+                 if (Left == null) {
+                    return Right; 
                 }
                 else if (Right == null)
                 {
-                    return Left;
+                    return Left; 
                 }
 
                 // Return the smallest node in the right sub tree
-                IBinaryTree<T> current = Right;
+                BinaryTree<T> current = Right;
                 while (current.Left != null)
                 {
                     current= current.Left;

@@ -28,7 +28,53 @@ namespace Trees.Tests
             BinaryTree<int> tree = new(10);
             tree.Add(values);
             Assert.IsTrue(tree.Contains(13));
+            Assert.IsFalse(tree.Contains(98));
+        }
+
+
+        [TestMethod]
+        public void TestRemoveNodeWithNoChildren()
+        {
+            List<int> values = new() { 7, 22, 13, 19, 32, 8, 5 };
+            BinaryTree<int> tree = new(12);
+            tree.Add(values);
+            Assert.IsTrue(tree.Contains(8));
+            tree.Remove(8);
+            Assert.IsFalse(tree.Contains(8));
+            List<int> nodes = new();
+            tree.InOrder(nodes);
+            List<int> expectedNodes = new() { 5, 7, 12, 13, 19, 22, 32 };
+            CollectionAssert.AreEqual(expectedNodes, nodes);
+        }
+
+        [TestMethod]
+        public void TestRemoveNodeWithOneChild()
+        {
+            List<int> values = new() { 7, 22, 13, 19, 32, 8, 5 };
+            BinaryTree<int> tree = new(12);
+            tree.Add(values);
+            Assert.IsTrue(tree.Contains(13));
+            tree.Remove(13);
             Assert.IsFalse(tree.Contains(13));
+            List<int> nodes = new();
+            tree.InOrder(nodes);
+            List<int> expectedNodes = new() { 5, 7, 8, 12, 19, 22, 32 };
+            CollectionAssert.AreEqual(expectedNodes, nodes);
+        }
+
+        [TestMethod]
+        public void TestRemoveNodeWithTwoChildren()
+        {
+            List<int> values = new() { 7, 22, 13, 19, 32, 8, 5, 27, 80, 30, 25 };
+            BinaryTree<int> tree = new(12);
+            tree.Add(values);
+            Assert.IsTrue(tree.Contains(22));
+            tree.Remove(22);
+            Assert.IsFalse(tree.Contains(22));
+            List<int> nodes = new();
+            tree.InOrder(nodes);
+            List<int> expectedNodes = new() { 5, 7, 8, 12, 13, 19, 25, 27, 30, 32, 80 };
+            CollectionAssert.AreEqual(expectedNodes, nodes);
         }
 
         [TestMethod]
