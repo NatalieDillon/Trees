@@ -10,7 +10,7 @@ using Trees.Classes;
 
 namespace Trees.Gui
 {
-    internal class DrawableTree<T> : BinaryTree<T>, IDrawable where T : IComparable<T>
+    internal class DrawableTree<T> : BinaryTree<T>, IDrawable where T : IComparable<T>, IEquatable<T>
     {               
         public int Level { get; set; }
      

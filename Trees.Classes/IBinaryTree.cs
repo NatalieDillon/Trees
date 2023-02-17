@@ -21,5 +21,11 @@ namespace Trees.Classes
         public void Add(List<T> newNodes);
 
         public List<T> BreadthFirst();
+
+        public bool Contains(T node);
+
+        public void Remove(T node);
+
+        public IBinaryTree<T>? RemoveNode(T node);
     }
 }

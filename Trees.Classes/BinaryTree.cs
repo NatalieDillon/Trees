@@ -1,6 +1,6 @@
 ﻿namespace Trees.Classes
 {
-    public class BinaryTree<T> : IBinaryTree<T> where T : IComparable<T>
+    public class BinaryTree<T> : IBinaryTree<T> where T : IComparable<T>, IEquatable<T>
     {
       
         // Protected methods
@@ -85,6 +85,25 @@
             return nodeValues;
         }
 
+        public bool Contains(T node)
+        {
+            if (Node.CompareTo(node) > 0)
+            {
+                if (Left != null)
+                {
+                    return Left.Contains(node);
+                }                
+            }
+            else if (Node.CompareTo(node) < 0)
+            {
+                if (Right != null)
+                {
+                    return Right.Contains(node);
+                }
+            }
+            return Node.Equals(node);
+        }
+
         public virtual void Add(T newNode)
         {
             if (Node.CompareTo(newNode) > 0)
@@ -116,6 +135,53 @@
             foreach (T node in newNodes)
             {
                 Add(node);
+            }
+        }
+
+        public void Remove(T node)
+        {
+           if (Node.Equals(node))
+           {
+                return; // We can't remove the root node in this case
+           }
+           RemoveNode(node);
+        }
+
+        public IBinaryTree<T>? RemoveNode(T node)
+        {
+            if (Node.CompareTo(node) > 0 && Left!= null)
+            {
+                Left = Left.RemoveNode(node);
+                return this;
+            }
+            else if (Node.CompareTo(node) < 0 && Right != null)
+            {
+               Right = Right.RemoveNode(node);
+               return this;
+            }
+            else if (Node.Equals(node))
+            {
+                if (Left == null) {
+                    return Right;
+                }
+                else if (Right == null)
+                {
+                    return Left;
+                }
+
+                // Return the smallest node in the right sub tree
+                IBinaryTree<T> current = Right;
+                while (current.Left != null)
+                {
+                    current= current.Left;
+                }
+                Node = current.Node;
+                Right = Right.RemoveNode(current.Node);
+                return this;
+            }
+            else
+            {
+                return this; // node not found
             }
         }
     }

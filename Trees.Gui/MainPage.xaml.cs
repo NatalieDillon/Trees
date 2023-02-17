@@ -28,6 +28,15 @@ namespace Trees.Gui
             graphicsView.Invalidate();
         }
 
+        private void OnRemoveClicked(object sender, EventArgs e)
+        {
+            if (tree != null)
+            {
+                tree.Remove(remove.Text);
+                graphicsView.Invalidate();
+            }
+        }
+
         private void OnInOrderClicked(object sender, EventArgs e)
         {
             traversedItems.Clear();

@@ -83,5 +83,20 @@
         {
             throw new NotImplementedException();
         }
+
+        public bool Contains(T node)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Remove(T node)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IBinaryTree<T>? RemoveNode(T node)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

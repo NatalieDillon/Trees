@@ -5,7 +5,7 @@
 
     <ScrollView>
         <VerticalStackLayout
-            Spacing="25"
+            Spacing="10"
             Padding="30,0"
             VerticalOptions="Center"
             x:Name="layout">
@@ -27,6 +27,20 @@
                 Text="Clear Tree"
                 SemanticProperties.Hint="Clears the tree"
                 Clicked="OnClearClicked"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout 
+                HorizontalOptions="Start"
+                Padding="16,8"
+                Spacing="8">
+                <Entry x:Name="remove"
+                       WidthRequest="100"
+                       Completed="OnRemoveClicked"/>
+                <Button
+                x:Name="removeBtn"
+                Text="Remove"
+                SemanticProperties.Hint="Removes from the tree"
+                Clicked="OnRemoveClicked" />               
             </HorizontalStackLayout>
 
             <HorizontalStackLayout 

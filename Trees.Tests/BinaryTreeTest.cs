@@ -20,6 +20,17 @@ namespace Trees.Tests
             CollectionAssert.AreEqual(values, nodes);
         }
 
+
+        [TestMethod]
+        public void TestFind()
+        {
+            List<int> values = new() { 12, 7, 22, 13, 19, 32, 8, 5 };
+            BinaryTree<int> tree = new(10);
+            tree.Add(values);
+            Assert.IsTrue(tree.Contains(13));
+            Assert.IsFalse(tree.Contains(13));
+        }
+
         [TestMethod]
         public void TestPreOrder()
         {
