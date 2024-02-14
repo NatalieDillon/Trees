@@ -1,8 +1,17 @@
-﻿namespace Trees;
-class Program
+﻿using Trees.Classes;
+
+namespace Trees
 {
-    static void Main(string[] args)
+    class Program
     {
-        Console.WriteLine("Hello, World!");
+        static void Main()
+        {
+            Console.WriteLine("Hello, World!");
+            BinaryTree<int> tree = new(88);
+            tree.Add(15);
+            tree.Add(12);
+            Console.WriteLine(tree.Contains(15));
+			Console.WriteLine(tree.Contains(91));
+		}
     }
 }
