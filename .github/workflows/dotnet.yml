@@ -21,6 +21,6 @@ jobs:
       with:
         dotnet-version: 7.0.x   
     - name: Build
-      run: dotnet build trees.classes.csproj
+      run: dotnet build Trees.Classes/trees.classes.csproj
     - name: Test
       run: dotnet test --no-build --verbosity normal
