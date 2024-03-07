@@ -1,6 +1,6 @@
 ﻿namespace Trees.Classes
 {
-    public class BinaryTree<T> where T : IComparable<T>, IEquatable<T>
+    public class BinaryTree<T> where T : IComparable
     {     
       
         // Public properties
@@ -138,7 +138,7 @@
 
         public void Remove(T node)
         {
-           if (Node.Equals(node))
+           if (Node.CompareTo(node) == 0)
            {
                 return; // We can't remove the root node 
            }

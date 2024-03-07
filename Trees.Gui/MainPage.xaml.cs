@@ -5,27 +5,51 @@ namespace Trees.Gui
 {
     public partial class MainPage : ContentPage
     {
-        DrawableTree<string> tree;
-        List<string> traversedItems = new();
+        DrawableTree<IComparable> tree;
+        List<IComparable> traversedItems = new();
 
-        public MainPage()
+		public MainPage()
         {
             InitializeComponent();
         }
 
-        private void OnAddClicked(object sender, EventArgs e)
+        private async void OnAddClicked(object sender, EventArgs e)
         {
-            if (tree == null)
+            try
             {
-                tree = new DrawableTree<string>(entry.Text);
-                graphicsView.Drawable = tree;
+                if (tree == null)
+                {
+                    // If the tree is null pick between string and decimal
+                    decimal decimalItem;
+                    if (decimal.TryParse(entry.Text, out decimalItem))
+                    {
+                        tree = new DrawableTree<IComparable>(decimalItem);
+                    }
+                    else
+                    {
+                        tree = new DrawableTree<IComparable>(entry.Text);
+                    }
+
+                    graphicsView.Drawable = tree;
+                }
+                else
+                {
+                    // If the tree is not null convert to the same type 
+                    if (tree.Node is decimal)
+                    {
+                        tree.Add(decimal.Parse(entry.Text));
+                    }
+                    else
+                    {
+                        tree.Add(entry.Text);
+                    }
+                }
+                entry.Text = string.Empty;
+                graphicsView.Invalidate();
             }
-            else
-            {
-                tree.Add(entry.Text);
-            }
-            entry.Text= string.Empty;
-            graphicsView.Invalidate();
+            catch (Exception ex) {
+				await DisplayAlert("Error", $"Could not add node {ex.Message}", "OK");
+			}
         }
 
         private async void OnRemoveClicked(object sender, EventArgs e)
@@ -34,8 +58,15 @@ namespace Trees.Gui
             {
                 if (tree != null)
                 {
-                    tree.Remove(remove.Text);
-                    graphicsView.Invalidate();
+					if (tree.Node is decimal)
+					{
+						tree.Remove(decimal.Parse(remove.Text));
+					}
+					else
+					{
+						tree.Remove(remove.Text);
+					};
+					graphicsView.Invalidate();
                 }
             }
             catch (Exception ex)
