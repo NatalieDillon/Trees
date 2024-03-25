@@ -140,7 +140,7 @@
         {
            if (Node.CompareTo(node) == 0)
            {
-                return; // We can't remove the root node 
+               throw new InvalidOperationException("Root node cannot be removed"); // We can't remove the root node 
            }
            RemoveNode(node);
         }
@@ -179,7 +179,7 @@
             }
             else
             {
-                return this; // node not found
+				throw new InvalidOperationException($"Node {node} cannot be removed"); ; // node not found
             }
         }
     }
