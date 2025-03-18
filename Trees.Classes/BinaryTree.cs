@@ -182,7 +182,7 @@
                 Right = Right.RemoveNode(current.Node);
                 return this;
             }
-            else // if we made id this far we didn't find the node that needed replacing
+            else // if we made it this far we didn't find the node that needed replacing
             {
 				throw new InvalidOperationException($"Node {node} cannot be removed");
             }
