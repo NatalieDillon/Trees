@@ -7,11 +7,11 @@ namespace Trees
         static void Main()
         {
             Console.WriteLine("Hello, World!");
-            BinaryTree<int> tree = new(88);
-            tree.Add(15);
+            BinaryTree<int> tree = new(14);
             tree.Add(12);
-            Console.WriteLine(tree.Contains(15));
-			Console.WriteLine(tree.Contains(91));
+            tree.Add(7);
+			tree.Add(4);
+            tree.Remove(7);
 		}
     }
 }

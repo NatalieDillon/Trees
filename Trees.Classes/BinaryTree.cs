@@ -149,17 +149,19 @@
         {
             if (Node.CompareTo(node) > 0 && Left!= null)
             {
-                Left = Left.RemoveNode(node);
+                Left = Left.RemoveNode(node); // Sets the left node to the replacement node
                 return this;
             }
             else if (Node.CompareTo(node) < 0 && Right != null)
             {
-               Right = Right.RemoveNode(node);
+               Right = Right.RemoveNode(node); // Sets the right node to the replacement node
                return this;
             }
-            else if (Node.Equals(node))
+            else if (Node.CompareTo(node) == 0) 
+            // We have found the node we want to replace and now we need to find what we will substitute it with
             {
-                 if (Left == null) {
+                // If there is only one child node it replaces the parent
+                if (Left == null) {
                     return Right; 
                 }
                 else if (Right == null)
@@ -167,19 +169,22 @@
                     return Left; 
                 }
 
-                // Return the smallest node in the right sub tree
-                BinaryTree<T> current = Right;
+				// At this point we know that both Left and Right are not null
+				// Now we find the leftmost node in the right subtree using iteration
+				BinaryTree<T> current = Right;
                 while (current.Left != null)
                 {
                     current= current.Left;
                 }
+                // We set the node to this node (hence replacing it)
                 Node = current.Node;
+                // Now we need to remove this node
                 Right = Right.RemoveNode(current.Node);
                 return this;
             }
-            else
+            else // if we made id this far we didn't find the node that needed replacing
             {
-				throw new InvalidOperationException($"Node {node} cannot be removed"); ; // node not found
+				throw new InvalidOperationException($"Node {node} cannot be removed");
             }
         }
     }
